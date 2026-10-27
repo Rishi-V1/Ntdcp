@@ -9,7 +9,7 @@ import type { EventItem, IncidentDetail, Summary } from '../api/types'
 import { EventDrawer } from '../components/EventDrawer'
 import {
   Button, Card, Chip, cx, EmptyState, ErrorState, EvidenceBadge, HelpTip, Pagination, ScoreBar, SensorBadge, SEV_COLOR,
-  SeverityBadge, Spinner, StatusBadge, SyntheticBanner,
+  SeverityBadge, Spinner, StatusBadge,
 } from '../components/ui'
 import { useApp } from '../lib/app-context'
 import { fmtBytes, fmtDuration, fmtScore, fmtSpan, fmtTime, STAGE_LABELS, STAGES, STATUS_LABELS, tzLabel } from '../lib/format'
@@ -405,7 +405,7 @@ function Workflow({ inc, onChanged }: { inc: IncidentDetail; onChanged: (d: Inci
 
 export default function IncidentDetailPage() {
   const { id = '' } = useParams()
-  const { version, dataset } = useApp()
+  const { version } = useApp()
   const { data: inc, error, loading, reload, setData } = useAsync(() => api.incident(id), [id, version])
   const [eventId, setEventId] = useState<string | null>(null)
   const [stage, setStage] = useState('')
@@ -430,7 +430,6 @@ export default function IncidentDetailPage() {
             <a className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-1.5 text-sm shadow-sm ring-1 ring-ink-600 hover:bg-sky-50" href={api.reportUrl(inc.id, 'csv')}><FileSpreadsheet size={14} aria-hidden />CSV</a>
           </div>
         </div>
-        <SyntheticBanner synthetic={!!dataset?.synthetic && inc.synthetic} />
         <div className="grid grid-cols-2 gap-3 rounded-xl border border-ink-600/70 bg-ink-850 p-4 text-sm md:grid-cols-4 xl:grid-cols-7">
           <div><div className="text-xs text-muted">Risk</div><div className="num text-lg font-semibold" style={{ color: SEV_COLOR[inc.severity] }}>{inc.risk_score.toFixed(1)}</div></div>
           <div><div className="text-xs text-muted">Confidence</div><div className="num text-lg font-semibold text-sky-700">{fmtScore(inc.confidence)}</div></div>

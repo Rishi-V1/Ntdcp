@@ -7,7 +7,7 @@ import {
 import { api } from '../api/client'
 import { DataGate } from '../components/NoDataset'
 import {
-  Button, Card, HelpTip, PageHeader, SEV_COLOR, SeverityBadge, Spinner, Stat, StatusBadge, SyntheticBanner,
+  Button, Card, HelpTip, PageHeader, SEV_COLOR, SeverityBadge, Spinner, Stat, StatusBadge,
 } from '../components/ui'
 import { useApp } from '../lib/app-context'
 import { fmtDuration, fmtHour, fmtInt, fmtPct, fmtScore, fmtTime, STAGE_LABELS, STATUS_LABELS, tzLabel } from '../lib/format'
@@ -34,34 +34,31 @@ export default function OverviewPage() {
           try { const r = await api.runCorrelation(); notify('success', `Correlation finished: ${r.n_incidents} incidents in ${fmtDuration(r.duration_ms)}`); refresh() }
           catch (e) { notify('error', (e as Error).message) } finally { setRunning(false) }
         }}><RefreshCw size={14} className={running ? 'animate-spin' : ''} aria-hidden />Re-run correlation</Button>} />
-      <SyntheticBanner synthetic={data.dataset.synthetic} />
 
-      <section aria-label="Main result" className="relative grid gap-5 overflow-hidden rounded-3xl bg-gradient-to-br from-sky-500 via-sky-600 to-blue-700 p-6 text-white shadow-xl shadow-sky-700/25 lg:grid-cols-[1.4fr_1fr]">
-        <div aria-hidden className="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full bg-white/10" />
-        <div aria-hidden className="pointer-events-none absolute -bottom-28 right-40 h-64 w-64 rounded-full bg-white/5" />
+      <section aria-label="Main result" className="grid gap-5 rounded-lg bg-white p-5 shadow-sm ring-1 ring-ink-600 lg:grid-cols-[1.4fr_1fr]">
         <div>
-          <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-sky-100">Computed from the active dataset</div>
-          <div className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-3xl font-semibold tracking-tight">
-            <span className="num text-4xl font-bold">{fmtInt(t.raw_events)}</span><span className="text-lg font-normal text-sky-100">raw events</span>
-            <ArrowRight className="self-center text-sky-200" aria-hidden />
-            <span className="num text-4xl font-bold">{fmtInt(t.incidents)}</span><span className="text-lg font-normal text-sky-100">incidents</span>
+          <div className="text-xs font-medium text-faint">Computed from the active dataset</div>
+          <div className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span className="num text-3xl font-semibold text-fg">{fmtInt(t.raw_events)}</span><span className="text-base text-muted">raw events</span>
+            <ArrowRight size={18} className="self-center text-faint" aria-hidden />
+            <span className="num text-3xl font-semibold text-fg">{fmtInt(t.incidents)}</span><span className="text-base text-muted">incidents</span>
           </div>
-          <p className="relative mt-3 max-w-2xl text-sm text-sky-50">
+          <p className="mt-3 max-w-2xl text-sm text-muted">
             {fmtInt(t.signal_events)} of the raw events carry an alert or detector tag. {fmtInt(t.events_in_incidents)} of them
             were grouped; {fmtInt(t.unassigned_signal_events)} alert-bearing events remain as individual items, so an analyst
-            reviews <b className="text-white">{fmtInt(t.triage_items)}</b> items instead of {fmtInt(t.signal_events)}.
+            reviews <b className="text-fg">{fmtInt(t.triage_items)}</b> items instead of {fmtInt(t.signal_events)}.
           </p>
         </div>
-        <div className="relative grid grid-cols-2 gap-3">
-          <div className="rounded-2xl bg-white/15 p-4 ring-1 ring-white/25 backdrop-blur">
-            <div className="flex items-center gap-1 text-xs text-sky-50">Event→incident reduction <HelpTip text={data.definitions.reduction_pct} /></div>
-            <div className="num mt-1 text-3xl font-bold">{fmtPct(t.reduction_pct, 2)}</div>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="rounded-md bg-ink-800 p-4">
+            <div className="flex items-center gap-1 text-xs text-muted">Event→incident reduction <HelpTip text={data.definitions.reduction_pct} /></div>
+            <div className="num mt-1 text-2xl font-semibold text-fg">{fmtPct(t.reduction_pct, 2)}</div>
           </div>
-          <div className="rounded-2xl bg-white p-4 text-fg shadow-lg">
+          <div className="rounded-md bg-ink-800 p-4">
             <div className="flex items-center gap-1 text-xs text-muted">Triage reduction <HelpTip text={data.definitions.triage_reduction_pct} /></div>
-            <div className="num mt-1 text-3xl font-bold text-sky-700">{fmtPct(t.triage_reduction_pct, 2)}</div>
+            <div className="num mt-1 text-2xl font-semibold text-fg">{fmtPct(t.triage_reduction_pct, 2)}</div>
           </div>
-          <div className="col-span-2 text-xs text-sky-100">
+          <div className="col-span-2 text-xs text-faint">
             Latest ingestion {fmtTime(data.latest_ingestion)} {tzLabel()}
             {data.correlation_run && <> · correlation run #{data.correlation_run.id} took {fmtDuration(data.correlation_run.duration_ms)}</>}
           </div>

@@ -4,13 +4,13 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { api } from '../api/client'
 import { EventDrawer } from '../components/EventDrawer'
 import { DataGate } from '../components/NoDataset'
-import { Button, Card, cx, EmptyState, PageHeader, Pagination, SensorBadge, Spinner, SyntheticBanner } from '../components/ui'
+import { Button, Card, cx, EmptyState, PageHeader, Pagination, SensorBadge, Spinner } from '../components/ui'
 import { useApp } from '../lib/app-context'
 import { fmtTime, STAGE_LABELS, tzLabel } from '../lib/format'
 import { useAsync, useDebounced } from '../lib/hooks'
 
 export default function EventsPage() {
-  const { version, dataset } = useApp()
+  const { version } = useApp()
   const [sp, setSp] = useSearchParams()
   const get = (k: string) => sp.get(k) ?? ''
   const [qInput, setQInput] = useState(get('q'))
@@ -34,7 +34,6 @@ export default function EventsPage() {
   return (
     <div className="space-y-4">
       <PageHeader title="Raw events" subtitle="Show me the underlying data. Every normalised record with its original payload." />
-      <SyntheticBanner synthetic={!!dataset?.synthetic} />
       <Card bodyClass="p-3">
         <div className="flex flex-wrap items-end gap-3">
           <label className="relative min-w-[16rem] flex-1">

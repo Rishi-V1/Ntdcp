@@ -2,7 +2,7 @@ import { FileDown, FileJson, FileSpreadsheet } from 'lucide-react'
 import { useState } from 'react'
 import { api } from '../api/client'
 import { DataGate } from '../components/NoDataset'
-import { Card, PageHeader, SeverityBadge, Spinner, StatusBadge, SyntheticBanner } from '../components/ui'
+import { Card, PageHeader, SeverityBadge, Spinner, StatusBadge } from '../components/ui'
 import { useApp } from '../lib/app-context'
 import { fmtTime } from '../lib/format'
 import { useAsync } from '../lib/hooks'
@@ -10,7 +10,7 @@ import { useAsync } from '../lib/hooks'
 const linkCls = 'inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs shadow-sm ring-1 ring-ink-600 hover:bg-sky-50'
 
 export default function ReportsPage() {
-  const { version, dataset } = useApp()
+  const { version } = useApp()
   const [page] = useState(1)
   const incidents = useAsync(() => api.incidents({ page, page_size: 200, sort: 'risk_score', order: 'desc' }), [version])
   const evals = useAsync(() => api.evaluationRuns().catch(() => []), [version])
@@ -18,7 +18,6 @@ export default function ReportsPage() {
   return (
     <div className="space-y-4">
       <PageHeader title="Reports" subtitle="Export incident reports and evaluation results. Reports carry the review disclaimer and synthetic-data label." />
-      <SyntheticBanner synthetic={!!dataset?.synthetic} />
       <Card title="All incidents" subtitle="One row per incident with severity, scores, status and tactics." actions={<a className={linkCls} href={api.incidentsCsvUrl()}><FileSpreadsheet size={13} aria-hidden />incidents.csv</a>}>
         {incidents.loading && !incidents.data ? <Spinner /> : (
           <div className="overflow-x-auto">

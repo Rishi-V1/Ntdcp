@@ -6,7 +6,7 @@ import type { IncidentListItem } from '../api/types'
 import { DataGate } from '../components/NoDataset'
 import {
   Button, Card, Chip, cx, EmptyState, PageHeader, Pagination, ScoreBar, SensorBadge, SEV_COLOR, SeverityBadge, Spinner,
-  StatusBadge, SyntheticBanner,
+  StatusBadge,
 } from '../components/ui'
 import { useApp } from '../lib/app-context'
 import { fmtScore, fmtSpan, fmtTime, SEVERITIES, STAGE_LABELS, STAGE_SHORT, STAGES, STATUS_LABELS, tzLabel } from '../lib/format'
@@ -30,7 +30,7 @@ export function StageChips({ stages }: { stages: string[] }) {
 }
 
 export default function IncidentsPage() {
-  const { version, dataset } = useApp()
+  const { version } = useApp()
   const nav = useNavigate()
   const [sp, setSp] = useSearchParams()
   const get = (k: string) => sp.get(k) ?? ''
@@ -75,7 +75,6 @@ export default function IncidentsPage() {
   return (
     <div className="space-y-4">
       <PageHeader title="Incidents" subtitle="What should I investigate first? Risk-ranked correlated incidents (meta-alerts)." />
-      <SyntheticBanner synthetic={!!dataset?.synthetic} />
       <Card bodyClass="p-3 space-y-3">
         <div className="flex flex-wrap items-end gap-3">
           <label className="relative min-w-[16rem] flex-1">

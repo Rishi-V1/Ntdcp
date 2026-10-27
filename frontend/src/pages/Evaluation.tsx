@@ -4,7 +4,7 @@ import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAx
 import { api } from '../api/client'
 import type { EvaluationRun, PRF } from '../api/types'
 import { DataGate } from '../components/NoDataset'
-import { Button, Card, cx, EmptyState, ErrorState, HelpTip, PageHeader, SeverityBadge, Spinner, SyntheticBanner } from '../components/ui'
+import { Button, Card, cx, EmptyState, ErrorState, HelpTip, PageHeader, SeverityBadge, Spinner } from '../components/ui'
 import { useApp } from '../lib/app-context'
 import { fmtDuration, fmtInt, fmtTime, STAGE_SHORT } from '../lib/format'
 import { useAsync } from '../lib/hooks'
@@ -39,7 +39,6 @@ function RunView({ run }: { run: EvaluationRun }) {
   const sc = r.scenario_scores
   return (
     <div className="space-y-4">
-      <SyntheticBanner synthetic={r.dataset.synthetic} />
       <Card title={`Run #${run.id} — ${r.dataset.name} v${r.dataset.version}`} subtitle={`${fmtTime(run.created_at)} · ${fmtDuration(run.duration_ms)} · engine ${r.engine_version} · ATT&CK ${r.attack_catalog}`}
         actions={<>
           <a className="inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 text-xs shadow-sm ring-1 ring-ink-600 hover:bg-sky-50" href={api.evaluationExportUrl(run.id, 'md')}><FileDown size={12} aria-hidden />Markdown</a>

@@ -242,15 +242,6 @@ export function TextInput({ value, onChange, label, placeholder, type = 'text', 
   )
 }
 
-export function SyntheticBanner({ synthetic }: { synthetic: boolean }) {
-  if (!synthetic) return null
-  return (
-    <div className="flex items-center gap-2 rounded-2xl bg-amber-50 px-4 py-2.5 text-xs font-medium text-amber-800 ring-1 ring-amber-200">
-      <AlertTriangle size={14} aria-hidden />
-      Synthetic demo data. Results show how the pipeline behaves on designed scenarios — not real-world detection performance.
-    </div>
-  )
-}
 
 export function PageHeader({ title, subtitle, actions }: { title: string; subtitle?: ReactNode; actions?: ReactNode }) {
   return (
