@@ -11,12 +11,12 @@ export function Card({ title, subtitle, actions, children, className, bodyClass,
   title?: ReactNode; subtitle?: ReactNode; actions?: ReactNode; children: ReactNode; className?: string; bodyClass?: string; id?: string
 }) {
   return (
-    <section id={id} className={cx('min-w-0 rounded-2xl bg-white shadow-[0_1px_2px_rgba(15,39,68,0.04),0_8px_24px_-12px_rgba(2,132,199,0.18)] ring-1 ring-ink-700', className)}>
+    <section id={id} className={cx('min-w-0 rounded-lg bg-white shadow-sm ring-1 ring-ink-600', className)}>
       {(title || actions) && (
         <header className="flex items-start justify-between gap-3 px-5 pt-4 pb-1">
           <div className="min-w-0">
-            {title && <h2 className="flex items-center gap-2 text-[14px] font-semibold text-fg"><span aria-hidden className="h-3.5 w-1 rounded-full bg-gradient-to-b from-sky-400 to-blue-600" />{title}</h2>}
-            {subtitle && <p className="mt-0.5 pl-3 text-xs text-muted">{subtitle}</p>}
+            {title && <h2 className="text-[14px] font-semibold text-fg">{title}</h2>}
+            {subtitle && <p className="mt-0.5 text-xs text-muted">{subtitle}</p>}
           </div>
           {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
         </header>
@@ -30,8 +30,8 @@ export function Stat({ label, value, hint, tone, icon, accent = 'sky' }: { label
   const ac = { sky: 'bg-sky-100 text-sky-700', blue: 'bg-blue-100 text-blue-700', rose: 'bg-rose-100 text-rose-700',
     violet: 'bg-violet-100 text-violet-700', teal: 'bg-teal-100 text-teal-700', amber: 'bg-amber-100 text-amber-700' }[accent]
   return (
-    <div className="flex min-w-0 items-start gap-3 rounded-2xl bg-white px-4 py-4 shadow-[0_1px_2px_rgba(15,39,68,0.04),0_8px_24px_-12px_rgba(2,132,199,0.18)] ring-1 ring-ink-700">
-      {icon && <div className={cx('grid h-10 w-10 shrink-0 place-items-center rounded-xl', ac)}>{icon}</div>}
+    <div className="flex min-w-0 items-start gap-3 rounded-lg bg-white px-4 py-4 shadow-sm ring-1 ring-ink-600">
+      {icon && <div className={cx('grid h-10 w-10 shrink-0 place-items-center rounded-md', ac)}>{icon}</div>}
       <div className="min-w-0">
         <div className="text-[11px] font-semibold uppercase tracking-wider text-faint">{label}</div>
         <div className={cx('num mt-0.5 text-2xl font-bold tracking-tight', tone ?? 'text-fg')}>{value}</div>
@@ -48,15 +48,13 @@ const SEV_CLASS: Record<string, string> = {
   Low: 'bg-sev-low/10 text-emerald-700 ring-sev-low/30',
   Informational: 'bg-slate-500/10 text-slate-700 ring-slate-500/30',
 }
-const SEV_SYMBOL: Record<string, string> = { Critical: '▲▲', High: '▲', Medium: '◆', Low: '▼', Informational: '○' }
 export const SEV_COLOR: Record<string, string> = {
   Critical: '#e11d48', High: '#ea580c', Medium: '#ca8a04', Low: '#059669', Informational: '#64748b',
 }
 
 export function SeverityBadge({ severity, compact }: { severity: Severity | string; compact?: boolean }) {
   return (
-    <span className={cx('inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-semibold ring-1 ring-inset whitespace-nowrap', SEV_CLASS[severity] ?? SEV_CLASS.Informational)}>
-      <span aria-hidden className="text-[9px]">{SEV_SYMBOL[severity] ?? '○'}</span>
+    <span className={cx('inline-flex items-center rounded-md px-2 py-0.5 text-[11px] font-semibold ring-1 ring-inset whitespace-nowrap', SEV_CLASS[severity] ?? SEV_CLASS.Informational)}>
       {compact ? severity.slice(0, 4) : severity}
     </span>
   )

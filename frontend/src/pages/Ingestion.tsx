@@ -3,7 +3,7 @@ import { useRef, useState } from 'react'
 import { api } from '../api/client'
 import type { Job } from '../api/types'
 import { LoadDemoButton } from '../components/NoDataset'
-import { Button, Card, Drawer, PageHeader, Spinner, SyntheticBanner } from '../components/ui'
+import { Button, Card, Drawer, PageHeader, Spinner } from '../components/ui'
 import { useApp } from '../lib/app-context'
 import { fmtDuration, fmtInt, fmtTime } from '../lib/format'
 import { useAsync } from '../lib/hooks'
@@ -62,7 +62,6 @@ export default function IngestionPage() {
   return (
     <div className="space-y-4">
       <PageHeader title="Data ingestion" subtitle="Load data and begin an investigation." />
-      <SyntheticBanner synthetic={!!dataset?.synthetic} />
       <div className="grid gap-4 lg:grid-cols-2">
         <Card title="Demo data" subtitle="Deterministic synthetic Suricata + Zeek telemetry (~8,200 events, scenarios A–G). Replaces any previous demo dataset and runs correlation.">
           <div className="space-y-3 text-sm text-muted">

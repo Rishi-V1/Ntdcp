@@ -50,10 +50,9 @@ describe('badges', () => {
     expect(screen.getByText('Inferred').closest('span')?.className).toContain('inferred-outline')
     expect(screen.getByText('Not observed')).toBeInTheDocument()
   })
-  it('severity badge shows text and a symbol', () => {
+  it('severity badge shows the severity text', () => {
     render(<SeverityBadge severity="High" />)
     expect(screen.getByText('High')).toBeInTheDocument()
-    expect(screen.getByText('▲')).toBeInTheDocument()
   })
   it('pagination calls back', () => {
     const onPage = vi.fn()

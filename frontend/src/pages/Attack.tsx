@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom'
 import { api } from '../api/client'
 import type { MatrixTechnique } from '../api/types'
 import { DataGate } from '../components/NoDataset'
-import { Card, cx, Drawer, EvidenceBadge, PageHeader, Spinner, SyntheticBanner } from '../components/ui'
+import { Card, cx, Drawer, EvidenceBadge, PageHeader, Spinner } from '../components/ui'
 import { useApp } from '../lib/app-context'
 import { useAsync } from '../lib/hooks'
 
 export default function AttackPage() {
-  const { version, dataset } = useApp()
+  const { version } = useApp()
   const { data, error, loading, reload } = useAsync(() => api.matrix(), [version])
   const [showEmpty, setShowEmpty] = useState(false)
   const [sel, setSel] = useState<{ tactic: string; t: MatrixTechnique } | null>(null)
@@ -21,7 +21,6 @@ export default function AttackPage() {
   return (
     <div className="space-y-4">
       <PageHeader title="MITRE ATT&CK explorer" subtitle="Technique coverage across incidents in the active dataset." />
-      <SyntheticBanner synthetic={!!dataset?.synthetic} />
       <div className="flex flex-wrap items-center gap-3 rounded-lg border border-ink-700 bg-ink-850 px-3 py-2 text-xs text-muted">
         <span>Catalog <b className="mono text-fg">{data.version}</b></span>
         <span className="text-amber-700">{data.coverage_note}</span>
